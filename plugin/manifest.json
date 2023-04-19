@@ -1,0 +1,24 @@
+{
+	"name": "GRepo",
+	"version": "0.0.1",
+	"description": "List all repos and deployment options from Github and Deploybot",
+	"manifest_version": 3,
+	"author": "Kapitan EJ",
+	"action": {
+		"default_popup": "index.html",
+		"default_title": "GRepo"
+	},
+	"permissions": [
+		"scripting",
+		"storage"
+	],
+	"host_permissions": [
+		"https://*/*"
+	],
+	"background": {
+		"service_worker": "background.js"
+	},
+	"icons": {
+		"512": "icon.png"
+	}
+}

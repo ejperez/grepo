@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>GRepo</title>
+		<script src="scripts.js"></script>
+		<script src="moment.min.js"></script>
+		<style>
+			main {
+				width: 500px;
+				background-image: url(icon.png);
+				background-size: 15%;
+				background-repeat: no-repeat;
+				background-position-x: right;	
+			}
+			small {
+				font-size: x-small;
+			}
+		</style>
+	</head>
+	<body>
+		<main>
+			<h1>GRepo <small>by Kapitan Apps</small></h1>
+
+			<div>
+				<h2>Repos & Deployments</h2>
+				<button id="js-refresh-repos" type="button">Refresh repos</button>
+				<select id="js-repos">
+					<option value="" disabled selected>Select a repo</option>
+				</select>
+				<ul id="js-workflows"></ul>
+			</div>
+
+			<div>
+				<h2>Settings</h2>
+				<input id="js-token" type="text" placeholder="GitHub|Deploybot Token">
+				<button id="js-save-settings" type="button">Save</button>
+			</div>
+
+			<p id="js-message"></p>
+		</main>
+	</body>
+</html>
