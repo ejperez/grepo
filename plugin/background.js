@@ -22,7 +22,8 @@ const getWorkflows = ( repo ) => {
 									return {
 										id: workflow.id,
 										link: link,
-										name: workflow.name + ` (Deploybot)`,
+										name: workflow.name,
+										host: 'Deploybot',
 										lastRun: data.length > 0 ? {
 											branch: workflow.branch_name,
 											commit: data[0].comment ?? '(no commit message)',
@@ -49,7 +50,8 @@ const getWorkflows = ( repo ) => {
 									return {
 										id: workflow.id,
 										link: link,
-										name: workflow.name + ` (Github)`,
+										name: workflow.name,
+										host: 'Github',
 										lastRun: 'workflow_runs' in data && data.workflow_runs.length > 0 ? {
 											branch: data.workflow_runs[0].head_branch,
 											commit: data.workflow_runs[0].head_commit.message ?? '(no commit message)',

@@ -22,21 +22,23 @@ const refreshWorkflows = () => {
 
 const renderWorkflows = ( workflows ) => {
 	document.getElementById( 'js-workflows' ).innerHTML = workflows.map( workflow => {
-		let html = '<li><h3>' + workflow.name + '</h3>';
+		let html = '<tr><td>' + workflow.host + '</td><td>' + workflow.name + '</td>';
 
 		if ( workflow.lastRun ) {
 			const timestamp = workflow.lastRun.timestamp ? moment( workflow.lastRun.timestamp ).fromNow() : '(date not available)';
 
-			html += '<span>Branch: ' + workflow.lastRun.branch + '</span><br>' +
-				'<span>Commit: ' + workflow.lastRun.commit + ' by ' + workflow.lastRun.author + '</span><br>' +
-				'<span>Run by: ' + workflow.lastRun.actor +
-				' ' + timestamp + '</span><br><br>' +
-				'<a href="' + workflow.link + '" target="_blank">View</a>';
+			html += '<td>' + workflow.lastRun.branch + '</td>' +
+				'<td>' + workflow.lastRun.commit + '</td>' +
+				'<td>' + workflow.lastRun.author + '</td>' +
+				'<td>' + workflow.lastRun.actor + '</td>' +
+				'<td>' + timestamp + '</td>' +
+				'<td><a href="' + workflow.link + '" target="_blank">Deploy</a></td>';
 		} else {
-			html += '<span>No workflow runs</span>'
+			html += '<td colspan="5" class="text-center">No workflow runs</td>' +
+				'<td><a href="' + workflow.link + '" target="_blank">Deploy</a></td>';
 		}
 
-		html += '</li>';
+		html += '</tr>';
 
 		return html;
 	} ).join( '' );
@@ -68,6 +70,14 @@ const checkSettings = () => {
 		document.getElementById( 'js-token' ).value = items.github_token && items.deploybot_token ? items.github_token + '|' + items.deploybot_token : '';
 		config.token = items.github_token;
 		config.deploybotToken = items.deploybot_token;
+
+		if ( config.token ) {
+			document.getElementById( 'js-repos-container' ).classList.remove( 'd-none' );
+			document.getElementById( 'js-no-repos-container' ).classList.add( 'd-none' );
+		} else {
+			document.getElementById( 'js-repos-container' ).classList.add( 'd-none' );
+			document.getElementById( 'js-no-repos-container' ).classList.remove( 'd-none' );
+		}
 	} );
 };
 
@@ -80,6 +90,7 @@ const saveSettings = () => {
 
 	chrome.storage.local.set( { 'github_token': tokenSplitted[0], 'deploybot_token': tokenSplitted[1] }, function () {
 		showMesage( 'Settings saved!' );
+		checkSettings();
 	} );
 };
 
@@ -87,13 +98,18 @@ const refreshRepoCache = () => {
 	chrome.runtime.sendMessage( { config: config, event: 'refreshRepoCache' } )
 		.then( response => {
 			chrome.storage.local.set( { repos: response }, () => {
-				showMesage( 'Repo cache updated!' )
+				showMesage( 'Repo cache updated!' );
+				renderRepoList();
 			} );
 		} );
 };
 
 const showMesage = ( message ) => {
 	document.getElementById( 'js-message' ).innerText = message;
+
+	setTimeout( () => {
+		document.getElementById( 'js-message' ).innerText = '';
+	}, 2000 );
 };
 
 window.onload = () => {
