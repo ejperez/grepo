@@ -29,7 +29,7 @@ const getWorkflows = ( repo ) => {
 											commit: data[0].comment ?? '(no commit message)',
 											author: data[0].author_name,
 											actor: data[0].author_name,
-											timestamp: data[0].deployed_at ? new Date( data[0].deployed_at.split( ' ' )[0] ) : null
+											timestamp: data[0].deployed_at ? new Date( data[0].deployed_at ) : null
 										} : null
 									}
 								} );
