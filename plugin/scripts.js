@@ -116,7 +116,11 @@ window.onload = () => {
 	checkSettings();
 	renderRepoList();
 
+	const repos = document.getElementById( 'js-repos' );
+
+	repos.addEventListener( 'change', refreshWorkflows );
+	repos.focus();
+
 	document.getElementById( 'js-refresh-repos' ).addEventListener( 'click', refreshRepoCache );
-	document.getElementById( 'js-repos' ).addEventListener( 'change', refreshWorkflows );
 	document.getElementById( 'js-save-settings' ).addEventListener( 'click', saveSettings );
 }
