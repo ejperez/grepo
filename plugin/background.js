@@ -6,6 +6,7 @@ const getWorkflows = ( repo ) => {
 		allFetch = [];
 
 	switch ( type ) {
+		case 'deploybot':
 		case 'deploybot/github':
 			allFetch.push( fetch( config.deploybotBaseURL + `/environments?repository_id=${id}`, getHeaders( true ) )
 				.then( response => response.text() )
@@ -29,7 +30,9 @@ const getWorkflows = ( repo ) => {
 											commit: data[0].comment ?? '(no commit message)',
 											author: data[0].author_name,
 											actor: data[0].author_name,
-											timestamp: data[0].deployed_at ? new Date( data[0].deployed_at ) : null
+											timestamp: data[0].deployed_at ? new Date( data[0].deployed_at ) : (
+												data[0].created_at ? new Date( data[0].created_at ) : null
+											)
 										} : null
 									}
 								} );
