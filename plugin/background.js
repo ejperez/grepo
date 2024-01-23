@@ -60,7 +60,7 @@ const getWorkflows = ( repo ) => {
 											commit: data.workflow_runs[0].head_commit.message ?? '(no commit message)',
 											author: data.workflow_runs[0].head_commit.author.name,
 											actor: data.workflow_runs[0].actor.login,
-											timestamp: data.workflow_runs[0].run_started_at ?? data.workflow_runs[0].run_started_at
+											timestamp: data.workflow_runs[0].run_started_at ? new Date( data.workflow_runs[0].run_started_at ) : null
 										} : null
 									}
 								} );
@@ -76,6 +76,18 @@ const getWorkflows = ( repo ) => {
 		data.forEach( repoArray => {
 			repos = [...repoArray, ...repos];
 		} );
+
+		repos.sort((a, b) => {
+			if(a.lastRun && b.lastRun) {
+				return b.lastRun.timestamp - a.lastRun.timestamp;
+			}
+			
+			if(a.lastRun && !b.lastRun) {
+				return 1;
+			}
+
+			return -1;
+		});
 
 		return repos;
 	} );
