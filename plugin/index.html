@@ -1,90 +1,71 @@
 <!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>GRepo</title>
-		<script src="scripts.js"></script>
-		<script src="moment.min.js"></script>
-		<script src="bootstrap.min.js"></script>
-		<link rel="stylesheet" href="bootstrap.min.css">
-		<style>
-			body {
-				width: 800px;
-				font-size: 0.75rem;
-			}
-			small {
-				font-size: x-small;
-			}
-		</style>
-	</head>
-	<body>
-		<div class="container-xxl">
-			<div class="row">
-				<div class="col">
-					<h1>GRepo <small>by Kapitan Apps</small></h1>
+<html lang="en" data-bs-theme="dark">
 
-					<ul class="nav nav-tabs" id="myTab" role="tablist">
-						<li class="nav-item" role="presentation">
-							<button class="nav-link active" id="home-tab" data-bs-toggle="tab"
-								data-bs-target="#home" type="button" role="tab" aria-controls="home"
-								aria-selected="true">Deployments</button>
-						</li>
-						<li class="nav-item" role="presentation">
-							<button class="nav-link" id="profile-tab" data-bs-toggle="tab"
-								data-bs-target="#settings" type="button" role="tab"
-								aria-controls="settings"
-								aria-selected="false">Settings</button>
-						</li>
-					</ul>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>GRepo</title>
+	<script src="scripts.js"></script>
+	<script src="moment.min.js"></script>
+	<script src="bootstrap.min.js"></script>
+	<link rel="stylesheet" href="bootstrap.min.css">
+	<style>
+		body {
+			width: 800px;
+			font-size: 0.77rem;			
+		}
 
-					<br>
+		small {
+			font-size: x-small;
+		}
+	</style>
+</head>
 
-					<div class="tab-content" id="myTabContent">
-						<div class="tab-pane fade show active" id="home" role="tabpanel">
-							<div id="js-repos-container">
-								<div class="input-group mb-3">
-									<button id="js-refresh-repos" class="btn btn-outline-secondary"
-										type="button">Refresh</button>
-									<select id="js-repos" class="form-select">
-										<option value="" disabled selected>Select a repo</option>
-									</select>
-								</div>
+<body>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col">
+				<ul class="nav nav-tabs" id="myTab" role="tablist">
+					<li class="nav-item" role="presentation">
+						<button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home"
+							type="button" role="tab" aria-controls="home" aria-selected="true">Deployments</button>
+					</li>
+					<li class="nav-item" role="presentation">
+						<button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#settings"
+							type="button" role="tab" aria-controls="settings" aria-selected="false">Settings</button>
+					</li>
+				</ul>
+			</div>
+		</div>
 
-								<table class="table">
-									<thead>
-										<tr>
-											<th scope="col">Host</th>
-											<th scope="col">Deployment</th>
-											<th scope="col">Branch</th>
-											<th scope="col">Commit</th>
-											<th scope="col">Author</th>
-											<th scope="col">Run by</th>
-											<th scope="col">On</th>
-											<th scope="col">Actions</th>
-										</tr>
-									</thead>
-									<tbody id="js-workflows">
-									</tbody>
-								</table>
-							</div>
-
-							<div id="js-no-repos-container" class="d-none">Add token in the settings
-								first</div>
-						</div>
-						<div class="tab-pane fade" id="settings" role="tabpanel">
-							<div class="input-group mb-3">
-								<input id="js-token" type="text" placeholder="GitHub|Deploybot Token"
-									class="form-control">
-								<button class="btn btn-primary" id="js-save-settings"
-									type="button">Save</button>
-							</div>
-						</div>
+		<div class="tab-content mt-3">
+			<div class="tab-pane fade show active" id="home" role="tabpanel">
+				<div id="js-repos-container">
+					<div class="input-group mb-3">						
+						<select id="js-repos" class="form-select">
+							<option value="" disabled selected>Select a repo</option>
+						</select>
+						<button id="js-refresh-repos" class="btn btn-outline-secondary" type="button">Refresh</button>
 					</div>
 
-					<p id="js-message"></p>
+					<div class="list-group" id="js-workflows"></div>
+					<div id="js-loading" class="progress d-none" role="progressbar" aria-label="Animated striped example" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+						<div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 100%"></div>
+					</div>
+				</div>
+
+				<div id="js-no-repos-container" class="d-none">Add token in the settings first</div>
+			</div>
+			<div class="tab-pane fade" id="settings" role="tabpanel">
+				<div class="input-group mb-3">
+					<input id="js-token" type="text" placeholder="GitHub|Deploybot Token" class="form-control">
+					<button class="btn btn-primary" id="js-save-settings" type="button">Save</button>
 				</div>
 			</div>
 		</div>
-	</body>
+
+		<p id="js-message"></p>
+	</div>
+</body>
+
 </html>
