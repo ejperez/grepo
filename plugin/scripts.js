@@ -43,7 +43,7 @@ const renderWorkflows = (workflows) => {
 			const timestamp = workflow.lastRun.timestamp ? moment(workflow.lastRun.timestamp).fromNow() : "(date not available)",
 				newName = workflow.name.replaceAll("Deployment - ", "");
 
-			return `<a href="${workflow.link}" class="list-group-item list-group-item-action overflow-x-hidden text-nowrap" title="View deployment">
+			return `<a href="${workflow.link}" target="_blank" class="list-group-item list-group-item-action overflow-x-hidden text-nowrap" title="View deployment">
 				<span class="fw-bold">${newName}</span>						
 				<span class="badge text-bg-primary">${workflow.lastRun.branch}</span>
 				<span>Ran by <span class="fst-italic">${workflow.lastRun.actor}</span> <span class="fw-bold">${timestamp}</span></span>
