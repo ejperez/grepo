@@ -28,6 +28,8 @@ const refreshWorkflows = () => {
 	});
 };
 
+const trim = (input, maxChars) => input.length > maxChars ? input.substring(0, maxChars) + "..." : input;
+
 const renderWorkflows = (workflows) => {
 	document.getElementById("js-workflows").innerHTML = workflows.filter(workflow => workflow.lastRun)
 		.sort((a, b) => {
@@ -44,10 +46,16 @@ const renderWorkflows = (workflows) => {
 				newName = workflow.name.replaceAll("Deployment - ", "");
 
 			return `<a href="${workflow.link}" target="_blank" class="list-group-item list-group-item-action overflow-x-hidden text-nowrap" title="View deployment">
-				<span class="fw-bold">${newName}</span>						
-				<span class="badge text-bg-primary">${workflow.lastRun.branch}</span>
-				<span>Ran by <span class="fst-italic">${workflow.lastRun.actor}</span> <span class="fw-bold">${timestamp}</span></span>
-				<div class="fst-italic">${workflow.lastRun.commit}</div>
+				<div class="float-start">
+					<span class="fw-bold">${newName}</span>
+					<br>
+					<span class="badge text-bg-primary">${trim(workflow.lastRun.branch, 40)}</span>
+				</div>
+				<div class="float-end text-end">
+					Ran by <span class="fst-italic">${workflow.lastRun.actor}</span> <span class="fw-bold">${timestamp}</span>
+					<br>
+					<span class="fst-italic">${trim(workflow.lastRun.commit, 40)}</span>
+				</div>				
 			</a>`;
 		}).join("");
 };

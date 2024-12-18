@@ -27,7 +27,7 @@ const getWorkflows = ( repo ) => {
 										host: 'Deploybot',
 										lastRun: data.length > 0 ? {
 											branch: workflow.branch_name,
-											commit: data[0].comment ?? '(no commit message)',
+											commit: data[0].comment ?? '---',
 											author: data[0].author_name,
 											actor: data[0].author_name,
 											timestamp: data[0].deployed_at ? new Date( data[0].deployed_at ) : (
