@@ -1,9 +1,9 @@
 {
 	"name": "GRepo",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"description": "List all repos and deployment options from Github and Deploybot",
 	"manifest_version": 3,
-	"author": "Kapitan EJ",
+	"author": "EJ Perez",
 	"action": {
 		"default_popup": "index.html",
 		"default_title": "GRepo"
