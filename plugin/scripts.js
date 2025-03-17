@@ -3,10 +3,7 @@ const config = {
 	token: "",
 	base: "https://api.github.com",
 	maxPage: 3,
-	owner: "stokmedia",
-	deploybotToken: "",
-	deploybotBaseURL: "https://stokmedia.deploybot.com/api/v1",
-	deploybotPublicURL: "https://stokmedia.deploybot.com"
+	owner: "stokmedia"
 };
 
 const refreshWorkflows = () => {
@@ -71,7 +68,7 @@ const renderRepoList = () => {
 
 		document.getElementById("js-repos").innerHTML = '<option value="" disabled selected>Select a repo</option>' + repos
 			.map(repo => {
-				return `<option ${currentRepo === repo.value ? "selected" : ""} value="${repo.value}">${repo.name} (${repo.type})</option>`
+				return `<option ${currentRepo === repo.name ? "selected" : ""} value="${repo.name}">${repo.name}</option>`
 			})
 			.join("");
 
@@ -82,10 +79,9 @@ const renderRepoList = () => {
 };
 
 const checkSettings = () => {
-	chrome.storage.local.get(["github_token", "deploybot_token", "repos"], function (items) {
-		document.getElementById("js-token").value = items.github_token && items.deploybot_token ? items.github_token + "|" + items.deploybot_token : "";
+	chrome.storage.local.get(["github_token", "repos"], function (items) {
+		document.getElementById("js-token").value = items.github_token;
 		config.token = items.github_token;
-		config.deploybotToken = items.deploybot_token;
 
 		if (config.token) {
 			document.getElementById("js-repos-container").classList.remove("d-none");
@@ -99,12 +95,14 @@ const checkSettings = () => {
 
 const saveSettings = () => {
 	const token = document.getElementById("js-token").value;
-	const tokenSplitted = token.split("|");
 
-	config.token = tokenSplitted[0];
-	config.deploybotToken = tokenSplitted[1];
+	if (!token.trim()) {
+		showMesage('GitHub token is required!');
 
-	chrome.storage.local.set({ "github_token": tokenSplitted[0], "deploybot_token": tokenSplitted[1] }, function () {
+		return;
+	}
+
+	chrome.storage.local.set({ "github_token": token }, function () {
 		showMesage("Settings saved!");
 		checkSettings();
 	});
